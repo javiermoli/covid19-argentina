@@ -1,0 +1,40 @@
+.map {
+  path {
+    cursor: pointer;
+    outline: none;
+    stroke: #ffe1e0;
+
+    &:hover {
+      stroke: #ff073a;
+      stroke-width: 3;
+    }
+  }
+
+  circle {
+    cursor: pointer;
+
+    &:hover {
+      stroke: #ff073a;
+      stroke-width: 3;
+    }
+  }
+}
+
+/* svg path {
+  fill: lightblue;
+  stroke: black;
+  stroke-dasharray: 2 2;
+}
+path:hover {
+  stroke: url(#checkerboard);
+  stroke-dasharray: none;
+  stroke: #ff073a;
+}
+path:active {
+  stroke: url(#diagonals);
+  stroke-dasharray: none;
+}
+pattern line {
+  stroke-width: 0.8;
+  stroke: black;
+} */
