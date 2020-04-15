@@ -18,10 +18,10 @@ const getCountryData = async (req, res) => {
     const countryData = {};
     const foundCountry = $(countryDataSelector).text();
     countryData.country = foundCountry.replace(/\n/g, '').trim();
-    const countryStats = $('#maincounter-wrap > div').text().split(/\n/g);
-    countryData.cases = countryStats[1];
-    countryData.deaths = countryStats[3];
-    countryData.recovered = countryStats[5];
+    const countryStats = $('#maincounter-wrap > div').text().replace(',', '').split(/\n/g);
+    countryData.cases = parseInt(countryStats[1]);
+    countryData.deaths = parseInt(countryStats[3]);
+    countryData.recovered = parseInt(countryStats[5]);
     res.status(200).json(countryData);
   } catch (error) {
     pageNotFound(res, error);
@@ -37,11 +37,11 @@ const getProvincesData = async (req, res) => {
     $(provincesDataSelector).each((index, element) => {
       const countryData = $(element).text().split(/\n/g);
       const count = {};
-      if (index > 0 && index < 25) {
-        count.name = countryData[1];
-        count.cases = countryData[3];
-        count.deaths = countryData[9];
-        count.recov = countryData[11];
+      if (index > 0 && index < 26) {
+        count.name = countryData[1].trim();
+        count.cases = parseInt(countryData[3].trim());
+        count.deaths = parseInt(countryData[9].trim());
+        count.recov = parseInt(countryData[13].trim());
         provinces.push(count);
       }
     });
