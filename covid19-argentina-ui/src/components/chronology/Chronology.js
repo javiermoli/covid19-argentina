@@ -23,7 +23,7 @@ const Chronology = () => {
 
   return (
     <div>
-      <S.Title className="chronology__title">Gráficos</S.Title>
+      <S.Title>Gráficos</S.Title>
       <Switch
         style={{ backgroundColor: '#bc1a1d' }}
         checkedChildren={<LineChartOutlined />}

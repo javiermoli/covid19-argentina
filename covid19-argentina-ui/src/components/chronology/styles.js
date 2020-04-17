@@ -5,7 +5,7 @@ const S = {};
 
 S.Container = styled.div`
   margin-top: 25px;
-  @media (max-width: 992px) {
+  @media (max-width: 950px) {
     display: flex;
     flex-direction: column;
     align-items: center;

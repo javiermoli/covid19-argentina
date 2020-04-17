@@ -1,6 +1,7 @@
 import React, { Suspense } from 'react';
-import { Layout, Spin } from 'antd';
+import { Layout } from 'antd';
 import { Switch, Route, Redirect } from 'react-router-dom';
+import Spinner from './components/spinner/Spinner';
 import 'antd/dist/antd.css';
 
 const { Content } = Layout;
@@ -11,20 +12,18 @@ const Home = React.lazy(() => import('./components/home/Home'));
 
 function App() {
   return (
-    <div className="App">
-      <Suspense fallback={<Spin />}>
-        <Layout className="layout">
-          <Nav />
-          <Content style={{ padding: '25px 25px' }}>
-            <Switch>
-              <Route path="/" component={Home} exact />
-              <Route path="/mundo" component={CountriesTable} exact />
-              <Route render={() => <Redirect to="/" />} />
-            </Switch>
-          </Content>
-        </Layout>
-      </Suspense>
-    </div>
+    <Suspense fallback={<Spinner />}>
+      <Layout className="layout">
+        <Nav />
+        <Content style={{ padding: '25px 25px' }}>
+          <Switch>
+            <Route path="/" component={Home} exact />
+            <Route path="/mundo" component={CountriesTable} exact />
+            <Route render={() => <Redirect to="/" />} />
+          </Switch>
+        </Content>
+      </Layout>
+    </Suspense>
   );
 }
 

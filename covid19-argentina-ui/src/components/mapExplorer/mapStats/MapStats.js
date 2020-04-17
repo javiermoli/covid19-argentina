@@ -12,11 +12,9 @@ const MapStats = ({ hovered, provincesData }) => {
 
   return (
     <div>
-      <S.HeaderContainer className="map-stats__header">
-        <S.HeaderTitle className="map-stats__header--title">Mapa de Argentina</S.HeaderTitle>
-        <S.HeaderSubtitle className="map-stats__header--subtitle">
-          Desplazar sobre una zona para ver detalles
-        </S.HeaderSubtitle>
+      <S.HeaderContainer>
+        <S.HeaderTitle>Mapa de Argentina</S.HeaderTitle>
+        <S.HeaderSubtitle>Desplazar sobre una zona para ver detalles</S.HeaderSubtitle>
       </S.HeaderContainer>
       {provinceData && (
         <div>
@@ -27,7 +25,7 @@ const MapStats = ({ hovered, provincesData }) => {
             recovered={recov}
             actives={activeCases}
           />
-          <S.StatsTitle className="map-stats__title">{provinceData.name}</S.StatsTitle>
+          <S.StatsTitle>{provinceData.name}</S.StatsTitle>
         </div>
       )}
     </div>

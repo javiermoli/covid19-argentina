@@ -2,8 +2,57 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Table } from 'antd';
 import { fetchCountriesData } from '../../actions/countriesActions';
+import S from './styles';
 
 const { Column } = Table;
+
+const countriesColumns = [
+  {
+    title: 'País',
+    key: 'country',
+    sort: (a, b) => a.country.localeCompare(b.country),
+  },
+  {
+    title: 'Nuevos casos',
+    key: 'newCases',
+    sort: (a, b) => a.newCases - b.newCases,
+  },
+  {
+    title: 'Casos',
+    key: 'cases',
+    sort: (a, b) => a.cases - b.cases,
+  },
+  {
+    title: 'Muertes',
+    key: 'deaths',
+    sort: (a, b) => a.deaths - b.deaths,
+  },
+  {
+    title: 'Nuevas Muertes',
+    key: 'newDeaths',
+    sort: (a, b) => a.newDeaths - b.newDeaths,
+  },
+  {
+    title: 'Recuperaciones',
+    key: 'recovered',
+    sort: (a, b) => a.deaths - b.deaths,
+  },
+  {
+    title: 'Casos activos',
+    key: 'activeCases',
+    sort: (a, b) => a.activeCases - b.activeCases,
+  },
+  {
+    title: 'Casos criticos',
+    key: 'seriousCritical',
+    sort: (a, b) => a.seriousCritical - b.seriousCritical,
+  },
+  {
+    title: 'Test realizados',
+    key: 'tests',
+    sort: (a, b) => a.tests - b.tests,
+  },
+];
 
 const CountriesTable = () => {
   const dispatch = useDispatch();
@@ -17,54 +66,18 @@ const CountriesTable = () => {
   }));
 
   return (
-    <div>
+    <S.Container>
       <Table pagination={false} loading={!countriesData.length} dataSource={countriesData}>
-        <Column title="País" dataIndex="country" key="country" />
-        <Column sorter={(a, b) => a.cases - b.cases} title="Casos" dataIndex="cases" key="cases" />
-        <Column
-          sorter={(a, b) => a.cases - b.cases}
-          title="Nuevos casos"
-          dataIndex="newCases"
-          key="newCases"
-        />
-        <Column
-          sorter={(a, b) => a.deaths - b.deaths}
-          title="Muertes"
-          dataIndex="deaths"
-          key="deaths"
-        />
-        <Column
-          sorter={(a, b) => a.newDeaths - b.newDeaths}
-          title="Nuevas muertes"
-          dataIndex="newDeaths"
-          key="newDeaths"
-        />
-        <Column
-          sorter={(a, b) => a.recovered - b.recovered}
-          title="Recuperaciones"
-          dataIndex="recovered"
-          key="recovered"
-        />
-        <Column
-          sorter={(a, b) => a.activeCases - b.activeCases}
-          title="Casos activos"
-          dataIndex="activeCases"
-          key="activeCases"
-        />
-        <Column
-          sorter={(a, b) => a.seriousCritical - b.seriousCritical}
-          title="Casos criticos"
-          dataIndex="seriousCritical"
-          key="seriousCritical"
-        />
-        <Column
-          sorter={(a, b) => a.tests - b.tests}
-          title="Test realizados"
-          dataIndex="tests"
-          key="tests"
-        />
+        {countriesColumns.map((column) => (
+          <Column
+            sorter={column.sort}
+            title={column.title}
+            dataIndex={column.key}
+            key={column.key}
+          />
+        ))}
       </Table>
-    </div>
+    </S.Container>
   );
 };
 

@@ -4,12 +4,36 @@ import { Table } from 'antd';
 import S from './styles';
 
 const { Column } = Table;
+const provincesColumns = [
+  {
+    title: 'Provincias',
+    key: 'name',
+    sort: (a, b) => a.name.localeCompare(b.name),
+  },
+  {
+    title: 'Casos',
+    key: 'cases',
+    sort: (a, b) => a.cases - b.cases,
+  },
+  {
+    title: 'Muertes',
+    key: 'deaths',
+    sort: (a, b) => a.deaths - b.deaths,
+  },
+  {
+    title: 'Recuperaciones',
+    sort: (a, b) => a.recov - b.recov,
+    key: 'recov',
+  },
+];
 
 const ProvincesTable = () => {
-  const provincesData = useSelector((state) => state.country.provinces).map((el) => ({
-    ...el,
-    key: el.name,
-  }));
+  const provincesData = useSelector((state) => state.country.provinces)
+    .map((el) => ({
+      ...el,
+      key: el.name,
+    }))
+    .filter((province) => !province.name.includes('Total'));
   return (
     <S.Table
       size="small"
@@ -17,20 +41,9 @@ const ProvincesTable = () => {
       loading={!provincesData.length}
       dataSource={provincesData}
     >
-      <Column title="Provincias" dataIndex="name" key="name" />
-      <Column sorter={(a, b) => a.cases - b.cases} title="Casos" dataIndex="cases" key="cases" />
-      <Column
-        sorter={(a, b) => a.deaths - b.deaths}
-        title="Muertes"
-        dataIndex="deaths"
-        key="deaths"
-      />
-      <Column
-        sorter={(a, b) => a.recov - b.recov}
-        title="Recuperaciones"
-        dataIndex="recov"
-        key="recov"
-      />
+      {provincesColumns.map((column) => (
+        <Column sorter={column.sort} title={column.title} dataIndex={column.key} key={column.key} />
+      ))}
     </S.Table>
   );
 };

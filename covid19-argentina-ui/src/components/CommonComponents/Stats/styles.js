@@ -3,7 +3,7 @@ import { Row } from 'antd';
 
 const S = {};
 
-const commonStyles = 'font-weight: bold; font-size: 14px; opacity: 0.7;';
+const commonStyles = 'font-weight: bold; font-size: 14px;';
 
 S.ColContainer = styled.div`
   display: flex;
@@ -23,7 +23,11 @@ S.ColContainer = styled.div`
 
 S.Text = styled.h5`
   ${commonStyles}
+  opacity: 0.7;
   color: ${(props) => props.color};
+  @media (max-width: 500px) {
+    font-size: 12px;
+  }
 `;
 
 S.Number = styled.h4`
@@ -37,9 +41,13 @@ S.Number = styled.h4`
 `;
 
 S.Row = styled(Row)`
+  @media (max-width: 500px) {
+    display: flex;
+    justify-content: center;
+  }
   div.ant-col {
     @media (max-width: 500px) {
-      padding: 8px 2px !important;
+      padding: 8px 4px !important;
     }
   }
 `;
