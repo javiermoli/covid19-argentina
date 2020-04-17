@@ -13,7 +13,14 @@ const initialState = {
 const comics = (state = initialState, action) => {
   switch (action.type) {
     case STORE_COUNTRY_STATS: {
-      return { ...state, stats: action.countryStats };
+      const { cases, recovered, deaths } = action.countryStats;
+      return {
+        ...state,
+        stats: {
+          ...action.countryStats,
+          actives: cases - recovered - deaths,
+        },
+      };
     }
     case STORE_PROVINCES_DATA: {
       return { ...state, provinces: action.provincesData };

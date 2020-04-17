@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import Map from './Map/Map';
 import MapStats from './mapStats/MapStats';
 import argMap from './assets/map.json';
-import './styles.scss';
+import S from './styles';
 
 const MapExplorer = () => {
   const provincesData = useSelector((state) => state.country.provinces);
@@ -15,19 +15,25 @@ const MapExplorer = () => {
 
   const parsedSVGData = {
     ...argMap,
-    layers: argMap.layers.map((layer) => {
+    layers: argMap.layers.reduce((acc, layer) => {
       const { cases } = provincesData.find((province) => province.name.includes(layer.name)) || 0;
-      return {
+      const newLayer = {
         ...layer,
         cases,
       };
-    }),
+      if (layer.name.includes(hovered)) {
+        return [...acc, newLayer];
+      }
+      return [newLayer, ...acc];
+    }, []),
   };
 
   return (
-    <div className="map-explorer">
+    <div>
       <MapStats provincesData={provincesData} hovered={hovered} />
-      <Map {...parsedSVGData} layerProps={layerProps} />
+      <S.Container>
+        <Map {...parsedSVGData} layerProps={layerProps} />
+      </S.Container>
     </div>
   );
 };

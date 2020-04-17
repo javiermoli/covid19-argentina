@@ -1,6 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './styles.scss';
+import Legend from '../legend/Legend';
+import S from './styles';
+
+const mapColors = ['#FFF4F0', '#FDD5C3', '#FCA487', '#FA7254', '#E83B2E', '#BC1A1D'];
+const DEFAULT_COLOR = '#FFFFFF';
 
 function inRange(n, nStart, nEnd) {
   if (n >= nStart && n <= nEnd) {
@@ -28,50 +32,36 @@ const VectorMap = ({
     return null;
   }
 
-  const max = layers.reduce((prev, current) =>
+  const maxLayerValue = layers.reduce((prev, current) =>
     prev.cases > (current.cases || 0) ? prev : current,
   );
 
-  const getLegendValues = () => {
-    const baseValue = (max.cases - 1) / 5;
-    const caseTwoValue = Math.round(baseValue * 2);
-    const caseThreeValue = Math.round(baseValue * 3);
-    const caseFourValue = Math.round(baseValue * 4);
-    const caseFiveValue = Math.round(baseValue * 5);
-
-    return {
-      case1: [1, baseValue],
-      case2: [baseValue + 1, caseTwoValue],
-      case3: [caseTwoValue + 1, caseThreeValue],
-      case4: [caseThreeValue + 1, caseFourValue],
-      case5: [caseFourValue + 1, caseFiveValue],
-      case6: [caseFiveValue + 1, Infinity],
-    };
+  const calculateLegendRange = (row) => {
+    const casesAverage = maxLayerValue.cases / 7;
+    const secondValue = row !== 5 ? Math.round(casesAverage * (row + 1)) : Infinity;
+    const firstValue = row ? (casesAverage * row + 1).toFixed() : 1;
+    return [firstValue, secondValue.toFixed()];
   };
 
-  const { case1, case2, case3, case4, case5, case6 } = getLegendValues();
+  const getLegendLayers = () =>
+    mapColors.reduce((result, color, i) => {
+      const layer = {
+        color,
+        range: calculateLegendRange(i),
+      };
+      return result.concat(layer);
+    }, []);
 
-  const confirmedCasesColorScale = (cases) => {
-    switch (true) {
-      case inRange(cases, case1[0], case1[1]):
-        return '#FFF4F0';
-      case inRange(cases, case2[0], case2[1]):
-        return '#FDD5C3';
-      case inRange(cases, case3[0], case3[1]):
-        return '#FCA487';
-      case inRange(cases, case4[0], case4[1]):
-        return '#FA7254';
-      case inRange(cases, case5[0], case5[1]):
-        return '#E83B2E';
-      case inRange(cases, case6[0], case6[1]):
-        return '#BC1A1D';
-      default:
-        return '#FFFFFF';
-    }
-  };
+  const legendLines = getLegendLayers();
+
+  const confirmedCasesColorScale = (cases) =>
+    legendLines.reduce((acc, element) => {
+      if (inRange(cases, element.range[0], element.range[1])) return element.color;
+      return acc;
+    }, DEFAULT_COLOR);
 
   return (
-    <div className="map" style={{ width: '250px' }}>
+    <S.MapContainer>
       <svg
         preserveAspectRatio="xMidYMid meet"
         xmlns="http://www.w3.org/2000/svg"
@@ -90,62 +80,19 @@ const VectorMap = ({
         ))}
         <g transform="translate(200, 635)">
           <g transform="translate(0,24)">
-            <g transform="translate(0,0)">
-              <rect style={{ fill: 'rgb(255, 245, 240)' }} width="36" height="10" />
-              <text style={{ fontSize: '10px' }} transform="translate( 46, 10)">
-                {case1[0]} - {case1[1].toFixed()}
-              </text>
-            </g>
             <circle
               name="Ciudad Autónoma de Buenos Aires"
               {...layerProps}
               fill="transparent"
-              cx="70"
-              cy="-380"
+              cx="60"
+              cy="-390"
               r="20"
             />
-            <g transform="translate(0,14)">
-              <rect style={{ fill: 'rgb(253, 213, 195)' }} width="36" height="10" />
-              <text style={{ fontSize: '10px' }} transform="translate( 46, 10)">
-                {case2[0].toFixed()} - {case2[1].toFixed()}
-              </text>
-            </g>
-            <g transform="translate(0,28)">
-              <rect style={{ fill: 'rgb(252, 164, 135)' }} width="36" height="10" />
-              <text style={{ fontSize: '10px' }} transform="translate( 46, 10)">
-                {case3[0].toFixed()} - {case3[1].toFixed()}
-              </text>
-            </g>
-            <g transform="translate(0,42)">
-              <rect style={{ fill: 'rgb(250, 112, 82)' }} width="36" height="10" />
-              <text style={{ fontSize: '10px' }} transform="translate( 46, 10)">
-                {case4[0].toFixed()} - {case4[1].toFixed()}
-              </text>
-            </g>
-            <g transform="translate(0,56)">
-              <rect style={{ fill: 'rgb(232, 56, 44)' }} width="36" height="10" />
-              <text style={{ fontSize: '10px' }} transform="translate( 46, 10)">
-                {case5[0].toFixed()} - {case5[1].toFixed()}
-              </text>
-            </g>
-            <g transform="translate(0,70)">
-              <rect style={{ fill: 'rgb(188, 21, 26)' }} width="36" height="10" />
-              <text style={{ fontSize: '10px' }} transform="translate( 46, 10)">
-                {case6[0].toFixed()} +
-              </text>
-            </g>
           </g>
-          <text style={{ fontSize: '10px' }}>
-            <tspan x="0" dy="0em">
-              Casos
-            </tspan>
-            <tspan x="0" dy="1.2em">
-              Confirmados
-            </tspan>
-          </text>
         </g>
+        <Legend layers={legendLines} />
       </svg>
-    </div>
+    </S.MapContainer>
   );
 };
 

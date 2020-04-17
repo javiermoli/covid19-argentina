@@ -10,7 +10,7 @@ export const storeCountriesStats = (countriesStats) => ({
 });
 
 export const fetchCountriesData = () => (dispatch) => {
-  axios.get('http://localhost:5000/api/countries').then((res) => {
+  axios.get(`${process.env.REACT_APP_BACKEND_URL}countries`).then((res) => {
     const countriesStats = res.data;
     dispatch(storeCountriesStats(countriesStats));
   });

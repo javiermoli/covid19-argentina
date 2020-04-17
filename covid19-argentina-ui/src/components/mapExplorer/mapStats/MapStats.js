@@ -1,47 +1,23 @@
 import React from 'react';
 import Stats from '../../CommonComponents/Stats/Stats';
-import './styles.scss';
+import S from './styles';
 
 const MapStats = ({ hovered, provincesData }) => {
-  // const parsedData = provincesData.reduce((acc, element) => {
-  //   acc[0] = acc[0] || [];
-  //   acc[1] = acc[1] || [];
-  //   if (element.name.includes('Buenos Aires')) {
-  //     if (acc[0].length) {
-  //       acc[0] = [
-  //         {
-  //           name: 'Buenos Aires',
-  //           cases: element.cases + acc[0][0].cases,
-  //           deaths: element.deaths + acc[0][0].deaths,
-  //           recov: element.recov + acc[0][0].recov,
-  //         },
-  //       ];
-  //     } else {
-  //       acc[0].push(element);
-  //     }
-  //     return acc;
-  //   }
-  //   acc[1].push(element);
-  //   return acc;
-  // }, []);
-
-  // const provinceData =
-  //   parsedData.length &&
-  //   [...parsedData[0], ...parsedData[1]].find((prov) => prov.name.includes(hovered));
-
   const provinceData =
     provincesData.length && provincesData.find((prov) => prov.name.includes(hovered));
 
-  const activeCases = provinceData && provinceData.cases - provinceData.recov - provinceData.deaths;
+  const activeCases = provinceData.cases - provinceData.recov - provinceData.deaths;
 
-  const { deaths, recov, cases } = provinceData || '';
+  const { deaths, recov, cases } = provinceData;
 
   return (
     <div>
-      <div className="map-stats__header">
-        <h2 className="map-stats__header--title">Mapa de Argentina</h2>
-        <h4 className="map-stats__header--subtitle">Desplazar sobre una zona para ver detalles</h4>
-      </div>
+      <S.HeaderContainer className="map-stats__header">
+        <S.HeaderTitle className="map-stats__header--title">Mapa de Argentina</S.HeaderTitle>
+        <S.HeaderSubtitle className="map-stats__header--subtitle">
+          Desplazar sobre una zona para ver detalles
+        </S.HeaderSubtitle>
+      </S.HeaderContainer>
       {provinceData && (
         <div>
           <Stats
@@ -51,7 +27,7 @@ const MapStats = ({ hovered, provincesData }) => {
             recovered={recov}
             actives={activeCases}
           />
-          <h4 className="map-stats__title">{provinceData.name}</h4>
+          <S.StatsTitle className="map-stats__title">{provinceData.name}</S.StatsTitle>
         </div>
       )}
     </div>

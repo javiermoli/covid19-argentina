@@ -1,33 +1,29 @@
-import React from 'react';
-import { Layout, Row, Col } from 'antd';
-import Summary from './components/Summary/Summary';
-import ProvincesTabled from './components/provincesTable/ProvincesTable';
-import CountriesTable from './components/countriesTable/CountriesTable';
-import Chronology from './components/chronology/Chronology';
-import MapExplorer from './components/mapExplorer/MapExplorer';
+import React, { Suspense } from 'react';
+import { Layout, Spin } from 'antd';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import 'antd/dist/antd.css';
-import './App.css';
-import Nav from './components/Header/Header';
 
 const { Content } = Layout;
+
+const CountriesTable = React.lazy(() => import('./components/countriesTable/CountriesTable'));
+const Nav = React.lazy(() => import('./components/Header/Header'));
+const Home = React.lazy(() => import('./components/home/Home'));
 
 function App() {
   return (
     <div className="App">
-      <Nav />
-      <Content style={{ padding: '0 50px' }}>
-        <Row gutter={[48, 8]}>
-          <Col span={12}>
-            <Summary />
-            <ProvincesTabled />
-          </Col>
-          <Col align-items="center" span={12}>
-            <MapExplorer />
-            <Chronology />
-          </Col>
-        </Row>
-        <CountriesTable />
-      </Content>
+      <Suspense fallback={<Spin />}>
+        <Layout className="layout">
+          <Nav />
+          <Content style={{ padding: '25px 25px' }}>
+            <Switch>
+              <Route path="/" component={Home} exact />
+              <Route path="/mundo" component={CountriesTable} exact />
+              <Route render={() => <Redirect to="/" />} />
+            </Switch>
+          </Content>
+        </Layout>
+      </Suspense>
     </div>
   );
 }

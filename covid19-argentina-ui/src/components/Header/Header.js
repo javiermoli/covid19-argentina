@@ -1,16 +1,33 @@
 import React from 'react';
-import { Layout, Menu } from 'antd';
+import { Layout } from 'antd';
+import S from './styles';
 
-const { Header, Content, Footer } = Layout;
+const { Header } = Layout;
 
 const Nav = () => (
-  <Header>
-    <div className="logo" />
-    <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
-      {/* <Menu.Item key="1">nav 1</Menu.Item>
-        <Menu.Item key="2">nav 2</Menu.Item>
-        <Menu.Item key="3">nav 3</Menu.Item> */}
-    </Menu>
+  <Header xs={{ span: 24 }}>
+    <S.NavLink
+      exact
+      activeStyle={{
+        fontWeight: 'bold',
+        color: '#ffffff',
+        backgroundColor: '#1890ff',
+      }}
+      to="/"
+    >
+      Home
+    </S.NavLink>
+    <S.NavLink
+      exact
+      activeStyle={{
+        fontWeight: 'bold',
+        color: '#ffffff',
+        backgroundColor: '#1890ff',
+      }}
+      to="/mundo"
+    >
+      Resto del mundo
+    </S.NavLink>
   </Header>
 );
 

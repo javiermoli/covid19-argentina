@@ -21,23 +21,28 @@ export const storeChronologyData = (chronologyData) => ({
   chronologyData,
 });
 
-export const fetchCountryData = () => (dispatch) => {
-  axios.get('http://localhost:5000/api/country/argentina').then((res) => {
-    const countryData = res.data;
-    dispatch(storeCountryStats(countryData));
-  });
-};
+export const fetchData = () => (dispatch) => {
+  const countryData = axios.get(`${process.env.REACT_APP_BACKEND_URL}country/argentina`);
+  const provincesData = axios.get(
+    `${process.env.REACT_APP_BACKEND_URL}country/argentina/provinces`,
+  );
+  const chronologyData = axios.get(
+    `${process.env.REACT_APP_BACKEND_URL}country/argentina/chronology`,
+  );
 
-export const fetchProvincesData = () => (dispatch) => {
-  axios.get('http://localhost:5000/api/country/argentina/provinces').then((res) => {
-    const provincesData = res.data;
-    dispatch(storeProvincesData(provincesData));
-  });
-};
-
-export const fetchChronology = () => (dispatch) => {
-  axios.get('http://localhost:5000/api/country/argentina/chronology').then((res) => {
-    const chronology = res.data;
-    dispatch(storeChronologyData(chronology));
-  });
+  axios
+    .all([countryData, provincesData, chronologyData])
+    .then(
+      axios.spread((...responses) => {
+        const countryDataResponse = responses[0];
+        const provincesDataResponse = responses[1];
+        const chronologyDataResponse = responses[2];
+        dispatch(storeCountryStats(countryDataResponse.data));
+        dispatch(storeProvincesData(provincesDataResponse.data));
+        dispatch(storeChronologyData(chronologyDataResponse.data));
+      }),
+    )
+    .catch((errors) => {
+      console.error(errors);
+    });
 };
