@@ -17,7 +17,7 @@ S.ColContainer = styled.div`
   border-radius: 5px;
   background-color: ${(props) => props.background || 'transparent'};
   @media (max-width: 500px) {
-    width: 80px;
+    width: 75px;
   }
 `;
 
@@ -26,7 +26,7 @@ S.Text = styled.h5`
   opacity: 0.7;
   color: ${(props) => props.color};
   @media (max-width: 500px) {
-    font-size: 12px;
+    font-size: 11px;
   }
 `;
 
