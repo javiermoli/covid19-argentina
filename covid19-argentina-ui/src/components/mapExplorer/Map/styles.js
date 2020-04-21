@@ -8,10 +8,10 @@ S.MapContainer = styled.div`
     cursor: pointer;
     outline: none;
     stroke: #ffe1e0;
+    stroke-width: 3;
 
     &:hover {
       stroke: #ff073a;
-      stroke-width: 3;
     }
   }
 

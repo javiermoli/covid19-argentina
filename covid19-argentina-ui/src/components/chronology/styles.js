@@ -20,10 +20,25 @@ S.Title = styled.h3`
 `;
 
 S.Switch = styled(Switch)`
-  button.ant-switch-checked {
-    color: #bc1a1d !important;
-    background-color: #bc1a1d !important;
-  }
+  margin: 10px 0;
+`;
+
+S.ButtonsContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+`;
+
+S.Button = styled.button`
+  margin: 0 5px;
+  font-weight: bold;
+  border: none;
+  opacity: ${({ isActive }) => (isActive ? 1 : 0.6)};
+  background-color: #d9d9d9;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 6px;
+  color: #8c8c8c;
 `;
 
 export default S;

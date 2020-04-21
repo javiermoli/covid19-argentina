@@ -1,47 +1,87 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Switch } from 'antd';
 import { BarChartOutlined, LineChartOutlined } from '@ant-design/icons';
-// import PieChart from '../charts/PieChart';
-import LineChart from '../charts/LineChart';
-import ChartBar from '../charts/ChartBar';
+import { Row, Col } from 'antd';
+import SwitchedCharts from '../CommonComponents/SwitchedCharts/SwitchedCharts';
 import S from './styles';
 
 const Chronology = () => {
   const [isBarChart, toggleChart] = useState(true);
-  const chronology = useSelector((state) => state.country.chronology);
-  // const countryData = useSelector((state) => state.country.stats);
-  // const { cases, recovered, deaths } = countryData;
-  // const active = cases - recovered;
+  const [isDaily, toggleIsDaily] = useState(true);
+  const chronology = useSelector((state) => state.country.stats);
   const chronologyParsedDates = chronology.map((day) => {
-    const date = new Date(day.Date);
+    const date = new Date(day.date);
     return {
       ...day,
       date: `${date.getDate()}/${date.getMonth() + 1}`,
     };
   });
 
+  const accumulatedData = chronologyParsedDates.reduce((acc, element, i) => {
+    if (!i) {
+      acc.push(element);
+    } else {
+      const newElement = {
+        ...element,
+        deaths: acc[i - 1].deaths + element.deaths,
+        cases: acc[i - 1].cases + element.cases,
+        recovered: acc[i - 1].recovered + element.recovered,
+      };
+      acc.push(newElement);
+    }
+    return acc;
+  }, []);
+
   return (
     <div>
       <S.Title>Gráficos</S.Title>
-      <Switch
-        style={{ backgroundColor: '#bc1a1d' }}
+      <S.ButtonsContainer>
+        <S.Button isActive={!isDaily} onClick={() => toggleIsDaily(false)}>
+          Acumulativo
+        </S.Button>
+        <S.Button isActive={isDaily} onClick={() => toggleIsDaily(true)}>
+          Diario
+        </S.Button>
+      </S.ButtonsContainer>
+      <S.Switch
+        style={{ backgroundColor: '#1890ff' }}
         checkedChildren={<LineChartOutlined />}
         unCheckedChildren={<BarChartOutlined />}
         checked={isBarChart}
         onChange={(value) => toggleChart(value)}
         defaultChecked
       />
-
-      <S.Container>
-        {isBarChart ? (
-          <ChartBar data={chronologyParsedDates} />
-        ) : (
-          <LineChart data={chronologyParsedDates} />
-        )}
-      </S.Container>
-
-      {/* <PieChart data={[{ data: recovered }, { data: deaths }, { data: active }]} /> */}
+      <Row>
+        <Col xs={{ span: 24 }} sm={{ span: 24 }} lg={{ span: 12 }} md={{ span: 12 }}>
+          <SwitchedCharts
+            isBarChart={isBarChart}
+            color="#bc1a1d"
+            dataKey="cases"
+            label="Casos"
+            data={!isDaily ? accumulatedData : chronologyParsedDates}
+          />
+        </Col>
+        <Col xs={{ span: 24 }} sm={{ span: 24 }} lg={{ span: 12 }} md={{ span: 12 }}>
+          <SwitchedCharts
+            isBarChart={isBarChart}
+            color="#28a745"
+            dataKey="recovered"
+            label="Recuperados"
+            data={!isDaily ? accumulatedData : chronologyParsedDates}
+          />
+        </Col>
+      </Row>
+      <Row>
+        <Col xs={{ span: 24 }} sm={{ span: 24 }} lg={{ span: 12 }} md={{ span: 12 }}>
+          <SwitchedCharts
+            isBarChart={isBarChart}
+            color="#ff073a"
+            dataKey="deaths"
+            label="Muertes"
+            data={!isDaily ? accumulatedData : chronologyParsedDates}
+          />
+        </Col>
+      </Row>
     </div>
   );
 };

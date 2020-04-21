@@ -2,9 +2,8 @@ import React, { Suspense } from 'react';
 import { Layout } from 'antd';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import Spinner from './components/spinner/Spinner';
+import S from './styles';
 import 'antd/dist/antd.css';
-
-const { Content } = Layout;
 
 const CountriesTable = React.lazy(() => import('./components/countriesTable/CountriesTable'));
 const Nav = React.lazy(() => import('./components/Header/Header'));
@@ -15,13 +14,13 @@ function App() {
     <Suspense fallback={<Spinner />}>
       <Layout className="layout">
         <Nav />
-        <Content style={{ padding: '25px 25px' }}>
+        <S.Content>
           <Switch>
             <Route path="/" component={Home} exact />
             <Route path="/mundo" component={CountriesTable} exact />
             <Route render={() => <Redirect to="/" />} />
           </Switch>
-        </Content>
+        </S.Content>
       </Layout>
     </Suspense>
   );

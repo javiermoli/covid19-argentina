@@ -19,6 +19,10 @@ S.ColContainer = styled.div`
   @media (max-width: 500px) {
     width: 75px;
   }
+
+  @media (max-width: 330px) {
+    width: 70px;
+  }
 `;
 
 S.Text = styled.h5`
@@ -27,6 +31,10 @@ S.Text = styled.h5`
   color: ${(props) => props.color};
   @media (max-width: 500px) {
     font-size: 11px;
+  }
+
+  @media (max-width: 330px) {
+    font-size: 10px;
   }
 `;
 

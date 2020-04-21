@@ -1,34 +1,36 @@
-import React from 'react';
-import { Layout } from 'antd';
+import React, { useState } from 'react';
+import { Drawer } from 'antd';
 import S from './styles';
 
-const { Header } = Layout;
+const Nav = () => {
+  const [isVisible, setVisible] = useState(false);
+  const [selected, setSelected] = useState('home');
 
-const Nav = () => (
-  <Header xs={{ span: 24 }}>
-    <S.NavLink
-      exact
-      activeStyle={{
-        fontWeight: 'bold',
-        color: '#ffffff',
-        backgroundColor: '#1890ff',
-      }}
-      to="/"
-    >
-      Home
-    </S.NavLink>
-    <S.NavLink
-      exact
-      activeStyle={{
-        fontWeight: 'bold',
-        color: '#ffffff',
-        backgroundColor: '#1890ff',
-      }}
-      to="/mundo"
-    >
-      Resto del mundo
-    </S.NavLink>
-  </Header>
-);
+  return (
+    <S.Header style={{ backgroundColor: '#1890ff' }}>
+      <S.MenuOutlined onClick={() => setVisible(true)} />
+      <Drawer
+        title="Menu"
+        placement="left"
+        closable
+        onClose={() => setVisible(!isVisible)}
+        visible={isVisible}
+      >
+        <S.Menu onClick={(e) => setSelected(e.key)} selectedKeys={[selected]} mode="inline">
+          <S.Item key="home">
+            <S.NavLink exact to="/">
+              Home
+            </S.NavLink>
+          </S.Item>
+          <S.Item key="world">
+            <S.NavLink exact to="/mundo">
+              Resto del mundo
+            </S.NavLink>
+          </S.Item>
+        </S.Menu>
+      </Drawer>
+    </S.Header>
+  );
+};
 
 export default Nav;

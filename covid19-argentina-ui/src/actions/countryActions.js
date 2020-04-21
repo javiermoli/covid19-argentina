@@ -3,7 +3,6 @@ import axios from 'axios';
 // Types
 export const STORE_COUNTRY_STATS = 'country/storeStats';
 export const STORE_PROVINCES_DATA = 'country/storeProvincesData';
-export const STORE_CHRONOLOGY = 'country/chronology';
 
 // Actions
 export const storeCountryStats = (countryStats) => ({
@@ -16,13 +15,8 @@ export const storeProvincesData = (provincesData) => ({
   provincesData,
 });
 
-export const storeChronologyData = (chronologyData) => ({
-  type: STORE_CHRONOLOGY,
-  chronologyData,
-});
-
 export const fetchData = () => (dispatch) => {
-  const countryData = axios.get(`${process.env.REACT_APP_BACKEND_URL}country/argentina`);
+  const countryData = axios.get(`${process.env.REACT_APP_BACKEND_URL}chronology`);
   const provincesData = axios.get(
     `${process.env.REACT_APP_BACKEND_URL}country/argentina/provinces`,
   );
@@ -36,10 +30,8 @@ export const fetchData = () => (dispatch) => {
       axios.spread((...responses) => {
         const countryDataResponse = responses[0];
         const provincesDataResponse = responses[1];
-        const chronologyDataResponse = responses[2];
         dispatch(storeCountryStats(countryDataResponse.data));
         dispatch(storeProvincesData(provincesDataResponse.data));
-        dispatch(storeChronologyData(chronologyDataResponse.data));
       }),
     )
     .catch((errors) => {

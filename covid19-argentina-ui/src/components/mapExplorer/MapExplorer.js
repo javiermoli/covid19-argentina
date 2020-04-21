@@ -10,7 +10,9 @@ const MapExplorer = () => {
   const [hovered, setHovered] = useState('Buenos Aires');
 
   const layerProps = {
-    onMouseEnter: ({ target }) => setHovered(target.attributes.name.value),
+    onMouseOver: ({ target }) => {
+      setHovered(target.attributes.name.value);
+    },
   };
 
   const parsedSVGData = {
@@ -29,12 +31,12 @@ const MapExplorer = () => {
   };
 
   return (
-    <div>
+    <S.Container>
       <MapStats provincesData={provincesData} hovered={hovered} />
-      <S.Container>
-        <Map {...parsedSVGData} layerProps={layerProps} />
-      </S.Container>
-    </div>
+      <S.MapContainer>
+        <Map {...parsedSVGData} hovered={hovered} layerProps={layerProps} />
+      </S.MapContainer>
+    </S.Container>
   );
 };
 

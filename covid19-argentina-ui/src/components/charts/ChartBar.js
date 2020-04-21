@@ -11,7 +11,7 @@ import {
 } from 'recharts';
 import S from './styles';
 
-const ChartBar = memo(({ data }) => (
+const ChartBar = memo(({ data, dataKey, label, color }) => (
   <S.Container>
     <ResponsiveContainer>
       <BarChart
@@ -26,9 +26,9 @@ const ChartBar = memo(({ data }) => (
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="date" />
         <YAxis />
-        <Tooltip label="casos" />
+        <Tooltip label={label} />
         <Legend align="center" horizontalAlign="center" verticalAlign="bottom" />
-        <Bar dataKey="Cases" fill="#bc1a1d" />
+        <Bar dataKey={dataKey} fill={color} />
       </BarChart>
     </ResponsiveContainer>
   </S.Container>

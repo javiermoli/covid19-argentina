@@ -3,12 +3,14 @@ import styled from 'styled-components';
 const S = {};
 
 S.Container = styled.div`
-  width: 500px;
+  margin: 20px 0;
+  width: 100%;
   height: 300px;
-
+  display: flex;
+  justify-content: center;
+  align-items: center;
   @media (max-width: 500px) {
-    width: 350px;
-    height: 210px;
+    height: 250px;
   }
 `;
 export default S;

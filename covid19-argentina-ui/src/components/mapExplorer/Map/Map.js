@@ -23,6 +23,7 @@ const VectorMap = ({
   layerProps,
   checkedLayers,
   currentLayers,
+  hovered,
   ...other
 }) => {
   if (!layers || !layers.length > 0) {

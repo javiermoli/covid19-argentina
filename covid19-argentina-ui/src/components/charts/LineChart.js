@@ -11,7 +11,7 @@ import {
 } from 'recharts';
 import S from './styles';
 
-const Chart = memo(({ data }) => (
+const Chart = memo(({ data, dataKey, label, color }) => (
   <S.Container>
     <ResponsiveContainer>
       <LineChart
@@ -26,9 +26,9 @@ const Chart = memo(({ data }) => (
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="date" />
         <YAxis />
-        <Tooltip />
+        <Tooltip label={label} />
         <Legend verticalAlign="bottom" align="center" />
-        <Line type="monotone" dataKey="Cases" stroke="#bc1a1d" />
+        <Line type="monotone" dataKey={dataKey} stroke={color} />
       </LineChart>
     </ResponsiveContainer>
   </S.Container>

@@ -22,16 +22,16 @@ const Home = () => {
           <S.TitleContainer>
             <S.Title>COVID-19 ARGENTINA</S.Title>
           </S.TitleContainer>
-          <Row gutter={[48, 8]}>
+          <Row>
             <Col xl={{ span: 12 }} md={{ span: 24 }} xs={{ span: 24 }} lg={{ span: 12 }}>
               <Summary countryData={countryData} />
               <ProvincesTabled />
             </Col>
             <Col xl={{ span: 12 }} md={{ span: 24 }} xs={{ span: 24 }} lg={{ span: 12 }}>
               <MapExplorer />
-              <Chronology />
             </Col>
           </Row>
+          <Chronology />
         </>
       ) : (
         <Spinner />
