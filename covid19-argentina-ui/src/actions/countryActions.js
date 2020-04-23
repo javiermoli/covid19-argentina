@@ -20,12 +20,9 @@ export const fetchData = () => (dispatch) => {
   const provincesData = axios.get(
     `${process.env.REACT_APP_BACKEND_URL}country/argentina/provinces`,
   );
-  const chronologyData = axios.get(
-    `${process.env.REACT_APP_BACKEND_URL}country/argentina/chronology`,
-  );
 
   axios
-    .all([countryData, provincesData, chronologyData])
+    .all([countryData, provincesData])
     .then(
       axios.spread((...responses) => {
         const countryDataResponse = responses[0];

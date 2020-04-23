@@ -1,0 +1,14 @@
+export const white = '#FFFFFF';
+export const gray = '#6c757d';
+export const red = '#ff073a';
+export const transparentRed = 'rgba(255, 7, 58, 0.12549)';
+export const maroon = '#bc1a1d';
+export const transparentMaroon = 'rgba(188, 26, 29, 0.12549)';
+export const blue = '#1890ff';
+export const transparentBlue = 'rgba(0, 123, 255, 0.0627451)';
+export const green = '#28a745';
+export const transparentGreen = 'rgba(40, 167, 69, 0.12549)';
+export const lightPink = '#ffe1e0';
+export const outerSpace = '#343a40';
+export const shadow = 'rgba(0, 0, 0, 0.18)';
+export const mapColorsScale = ['#FFF4F0', '#FDD5C3', '#FCA487', '#FA7254', '#E83B2E', '#BC1A1D'];

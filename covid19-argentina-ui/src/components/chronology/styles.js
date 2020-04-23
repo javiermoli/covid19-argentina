@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Switch } from 'antd';
+import { outerSpace } from '../../colors';
 
 const S = {};
 
@@ -16,7 +17,7 @@ S.Title = styled.h3`
   font-weight: bold;
   font-size: 25px;
   margin: 30px 0;
-  color: #343a40;
+  color: ${outerSpace};
 `;
 
 S.Switch = styled(Switch)`

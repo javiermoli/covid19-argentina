@@ -7,7 +7,7 @@ import S from './styles';
 
 const MapExplorer = () => {
   const provincesData = useSelector((state) => state.country.provinces);
-  const [hovered, setHovered] = useState('Buenos Aires');
+  const [hovered, setHovered] = useState('Provincia de Buenos Aires');
 
   const layerProps = {
     onMouseOver: ({ target }) => {

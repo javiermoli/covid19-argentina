@@ -2,9 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Legend from '../legend/Legend';
 import S from './styles';
-
-const mapColors = ['#FFF4F0', '#FDD5C3', '#FCA487', '#FA7254', '#E83B2E', '#BC1A1D'];
-const DEFAULT_COLOR = '#FFFFFF';
+import { red, white, lightPink, mapColorsScale } from '../../../colors';
 
 function inRange(n, nStart, nEnd) {
   if (n >= nStart && n <= nEnd) {
@@ -45,7 +43,7 @@ const VectorMap = ({
   };
 
   const getLegendLayers = () =>
-    mapColors.reduce((result, color, i) => {
+    mapColorsScale.reduce((result, color, i) => {
       const layer = {
         color,
         range: calculateLegendRange(i),
@@ -59,7 +57,7 @@ const VectorMap = ({
     legendLines.reduce((acc, element) => {
       if (inRange(cases, element.range[0], element.range[1])) return element.color;
       return acc;
-    }, DEFAULT_COLOR);
+    }, white);
 
   return (
     <S.MapContainer>
@@ -75,6 +73,7 @@ const VectorMap = ({
             style={{ fill: confirmedCasesColorScale(layer.cases) }}
             key={layer.id}
             tabIndex={tabIndex}
+            stroke={hovered.includes(layer.name) ? red : lightPink}
             {...layer}
             {...layerProps}
           />
@@ -82,6 +81,7 @@ const VectorMap = ({
         <g transform="translate(200, 635)">
           <g transform="translate(0,24)">
             <circle
+              stroke={hovered.includes('Ciudad Autónoma de Buenos Aires') ? red : 'transparent'}
               name="Ciudad Autónoma de Buenos Aires"
               {...layerProps}
               fill="transparent"

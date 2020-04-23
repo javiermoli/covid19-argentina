@@ -4,6 +4,7 @@ import { BarChartOutlined, LineChartOutlined } from '@ant-design/icons';
 import { Row, Col } from 'antd';
 import SwitchedCharts from '../CommonComponents/SwitchedCharts/SwitchedCharts';
 import S from './styles';
+import { maroon, green, blue, red } from '../../colors';
 
 const Chronology = () => {
   const [isBarChart, toggleChart] = useState(true);
@@ -44,7 +45,7 @@ const Chronology = () => {
         </S.Button>
       </S.ButtonsContainer>
       <S.Switch
-        style={{ backgroundColor: '#1890ff' }}
+        style={{ backgroundColor: blue }}
         checkedChildren={<LineChartOutlined />}
         unCheckedChildren={<BarChartOutlined />}
         checked={isBarChart}
@@ -55,7 +56,7 @@ const Chronology = () => {
         <Col xs={{ span: 24 }} sm={{ span: 24 }} lg={{ span: 12 }} md={{ span: 12 }}>
           <SwitchedCharts
             isBarChart={isBarChart}
-            color="#bc1a1d"
+            color={maroon}
             dataKey="cases"
             label="Casos"
             data={!isDaily ? accumulatedData : chronologyParsedDates}
@@ -64,7 +65,7 @@ const Chronology = () => {
         <Col xs={{ span: 24 }} sm={{ span: 24 }} lg={{ span: 12 }} md={{ span: 12 }}>
           <SwitchedCharts
             isBarChart={isBarChart}
-            color="#28a745"
+            color={green}
             dataKey="recovered"
             label="Recuperados"
             data={!isDaily ? accumulatedData : chronologyParsedDates}
@@ -75,7 +76,7 @@ const Chronology = () => {
         <Col xs={{ span: 24 }} sm={{ span: 24 }} lg={{ span: 12 }} md={{ span: 12 }}>
           <SwitchedCharts
             isBarChart={isBarChart}
-            color="#ff073a"
+            color={red}
             dataKey="deaths"
             label="Muertes"
             data={!isDaily ? accumulatedData : chronologyParsedDates}

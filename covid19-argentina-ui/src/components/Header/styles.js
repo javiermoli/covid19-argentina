@@ -2,26 +2,27 @@ import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import { Layout, Menu } from 'antd';
 import { MenuOutlined } from '@ant-design/icons';
+import { blue, white, outerSpace } from '../../colors';
 
 const S = {};
 
 S.NavLink = styled(NavLink)`
-  &:hover: #262626;
+  &:hover: ${outerSpace};
 `;
 
 S.MenuOutlined = styled(MenuOutlined)`
   font-size: 20px;
-  color: #ffffff;
+  color: ${white};
 `;
 
 S.Item = styled(Menu.Item)`
   background-color: transparent !important;
-  color: #262626;
+  color: ${outerSpace};
   font-weight: bold;
 `;
 
 S.Header = styled(Layout.Header)`
-  background-color: #1890ff;
+  background-color: ${blue};
   padding: 0 25px;
 `;
 

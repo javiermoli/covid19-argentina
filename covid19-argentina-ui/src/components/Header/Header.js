@@ -1,29 +1,30 @@
 import React, { useState } from 'react';
 import { Drawer } from 'antd';
 import S from './styles';
+import { blue } from '../../colors';
 
 const Nav = () => {
   const [isVisible, setVisible] = useState(false);
   const [selected, setSelected] = useState('home');
 
   return (
-    <S.Header style={{ backgroundColor: '#1890ff' }}>
+    <S.Header style={{ backgroundColor: blue }}>
       <S.MenuOutlined onClick={() => setVisible(true)} />
       <Drawer
         title="Menu"
         placement="left"
         closable
-        onClose={() => setVisible(!isVisible)}
+        onClose={() => setVisible(false)}
         visible={isVisible}
       >
         <S.Menu onClick={(e) => setSelected(e.key)} selectedKeys={[selected]} mode="inline">
           <S.Item key="home">
-            <S.NavLink exact to="/">
+            <S.NavLink onClick={() => setVisible(false)} exact to="/">
               Home
             </S.NavLink>
           </S.Item>
           <S.Item key="world">
-            <S.NavLink exact to="/mundo">
+            <S.NavLink onClick={() => setVisible(false)} exact to="/mundo">
               Resto del mundo
             </S.NavLink>
           </S.Item>

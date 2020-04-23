@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { maroon, gray } from '../../../colors';
 
 const S = {};
 
@@ -15,11 +16,11 @@ S.HeaderTitle = styled.h2`
 S.HeaderSubtitle = styled.h4`
   padding: 0;
   margin: 0;
-  color: #6c757d;
+  color: ${gray};
 `;
 
 S.StatsTitle = styled.h4`
-  color: rgb(188, 26, 29);
+  color: ${maroon};
   font-weight: bold;
   font-size: 16px;
 `;

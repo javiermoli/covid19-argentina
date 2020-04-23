@@ -1,6 +1,5 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
-const { WORLDOMETERS_BASE_URL } = require('../constants');
 const pageNotFound = require('../utils/errorsHelper');
 
 const COUNTRIES_SELECTOR = 'table#main_table_countries_today>tbody>tr';
@@ -33,7 +32,7 @@ const makeDataExportable = (data) => {
 
 const getCountriesData = async (req, res) => {
   try {
-    const data = await axios.get(WORLDOMETERS_BASE_URL);
+    const data = await axios.get(process.env.COUNTRIES_URL);
     const $ = cheerio.load(data.data);
     const list = [];
     $(COUNTRIES_SELECTOR).each((index, element) => {

@@ -20,9 +20,7 @@ const Summary = ({ countryData }) => {
   const actives = cases - deaths - recovered;
   return (
     <div>
-      <div>
-        <Stats confirmed={cases} deaths={deaths} recovered={recovered} actives={actives} />
-      </div>
+      <Stats confirmed={cases} deaths={deaths} recovered={recovered} actives={actives} />
     </div>
   );
 };

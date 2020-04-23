@@ -11,7 +11,10 @@ S.MapContainer = styled.div`
 S.Container = styled.div`
   margin-left: 40px;
   @media (max-width: 980px) {
-    margin: 0;
+    margin: 35px 0 0 0;
+  }
+  @media (max-width: 500px) {
+    margin: 25px 0 0 0;
   }
 `;
 

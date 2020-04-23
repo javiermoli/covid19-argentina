@@ -1,6 +1,16 @@
 import React from 'react';
 import { Row, Col } from 'antd';
 import S from './styles';
+import {
+  maroon,
+  green,
+  blue,
+  red,
+  transparentBlue,
+  transparentGreen,
+  transparentMaroon,
+  transparentRed,
+} from '../../../colors';
 
 const StatItem = ({ text, number, color, background }) => (
   <Col>
@@ -20,26 +30,26 @@ const Stats = ({ confirmed, actives, recovered, deaths, showBackground }) => (
     <StatItem
       text="Confirmados"
       number={confirmed}
-      color="rgb(188, 26, 29)"
-      background={showBackground && 'rgba(255, 7, 58, 0.12549)'}
+      color={maroon}
+      background={showBackground && transparentMaroon}
     />
     <StatItem
       text="Activos"
       number={actives}
-      color="#007bff"
-      background={showBackground && 'rgba(0, 123, 255, 0.0627451)'}
+      color={blue}
+      background={showBackground && transparentBlue}
     />
     <StatItem
       text="Recuperados"
       number={recovered}
-      color="#28a745"
-      background={showBackground && 'rgba(40, 167, 69, 0.12549)'}
+      color={green}
+      background={showBackground && transparentGreen}
     />
     <StatItem
       text="Muertes"
       number={deaths}
-      color="#ff073a"
-      background={showBackground && 'rgba(255, 7, 58, 0.12549)'}
+      color={red}
+      background={showBackground && transparentRed}
     />
   </S.Row>
 );
