@@ -31,7 +31,5 @@ export const fetchData = () => (dispatch) => {
         dispatch(storeProvincesData(provincesDataResponse.data));
       }),
     )
-    .catch((errors) => {
-      console.error(errors);
-    });
+    .catch((errors) => console.error(errors));
 };

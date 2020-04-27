@@ -1,5 +1,5 @@
 import React from 'react';
-import Stats from '../../CommonComponents/Stats/Stats';
+import Stats from '../../commonComponents/stats/Stats';
 import S from './styles';
 
 const MapStats = ({ hovered, provincesData }) => {

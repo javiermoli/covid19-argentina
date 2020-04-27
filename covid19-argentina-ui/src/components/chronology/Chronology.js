@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { BarChartOutlined, LineChartOutlined } from '@ant-design/icons';
 import { Row, Col } from 'antd';
-import SwitchedCharts from '../CommonComponents/SwitchedCharts/SwitchedCharts';
+import SwitchedCharts from '../commonComponents/switchedCharts/SwitchedCharts';
 import S from './styles';
 import { maroon, green, blue, red } from '../../colors';
 

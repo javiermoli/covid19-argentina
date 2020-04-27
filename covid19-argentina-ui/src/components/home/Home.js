@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col } from 'antd';
-import Summary from '../Summary/Summary';
+import Summary from '../summary/Summary';
 import ProvincesTabled from '../provincesTable/ProvincesTable';
 import Chronology from '../chronology/Chronology';
 import MapExplorer from '../mapExplorer/MapExplorer';

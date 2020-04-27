@@ -5,7 +5,7 @@ const initialState = {
   stats: [],
 };
 
-const comics = (state = initialState, action) => {
+const country = (state = initialState, action) => {
   switch (action.type) {
     case STORE_COUNTRY_STATS: {
       return { ...state, stats: action.countryStats };
@@ -18,4 +18,4 @@ const comics = (state = initialState, action) => {
   }
 };
 
-export default comics;
+export default country;
