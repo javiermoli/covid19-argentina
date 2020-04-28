@@ -16,6 +16,10 @@ export const setLoading = (loading) => ({
   loading,
 });
 
+/**
+ * Login the user if token expiration time is valid.
+ * Add setTimeout with the token expiration time stored in the local storage
+ */
 export const logoutAsync = () => (dispatch) => {
   const remainingTime = getRemainingTimeForTokenExpiration();
   if (remainingTime > 0) {
@@ -27,6 +31,10 @@ export const logoutAsync = () => (dispatch) => {
   }, remainingTime);
 };
 
+/**
+ * API request, add the token and the remaining
+ * for expiration time to the local storage
+ */
 export const requestLogin = (payload, history) => (dispatch) => {
   const { email, password } = payload;
   dispatch(setLoading(true));

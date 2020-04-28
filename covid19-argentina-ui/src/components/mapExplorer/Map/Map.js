@@ -25,13 +25,22 @@ const VectorMap = ({ hovered, parsedSVGData, handleMouseOver }) => {
     prev.cases > (current.cases || 0) ? prev : current,
   );
 
+  /**
+   * Calculate the legend range of values for the given row
+   * @param {Number} row the row of the legend
+   * @returns {Number[]}
+   */
   const calculateLegendRange = (row) => {
     const casesAverage = maxLayerValue.cases / 10;
-    const secondValue = row !== 5 ? Math.round(casesAverage * (row + 1)) : Infinity;
     const firstValue = row ? (casesAverage * row + 1).toFixed() : 1;
-    return [firstValue, secondValue.toFixed()];
+    const secondValue = row !== 5 ? Math.round(casesAverage * (row + 1)) : Infinity;
+    return [firstValue, secondValue];
   };
 
+  /**
+   * Calculate the layers of the legend with the color and the range
+   * @returns {Object[]}
+   */
   const getLegendLayers = () =>
     mapColorsScale.reduce((result, color, i) => {
       const layer = {
@@ -41,10 +50,15 @@ const VectorMap = ({ hovered, parsedSVGData, handleMouseOver }) => {
       return result.concat(layer);
     }, []);
 
-  const legendLines = getLegendLayers();
+  const legendLayers = getLegendLayers();
 
+  /**
+   * Calculate the color for the given cases
+   * @param {Number} cases number of cases
+   * @returns {String}
+   */
   const confirmedCasesColorScale = (cases) =>
-    legendLines.reduce((acc, element) => {
+    legendLayers.reduce((acc, element) => {
       if (inRange(cases, element.range[0], element.range[1])) return element.color;
       return acc;
     }, white);
@@ -84,7 +98,7 @@ const VectorMap = ({ hovered, parsedSVGData, handleMouseOver }) => {
             />
           </g>
         </g>
-        <Legend layers={legendLines} />
+        <Legend layers={legendLayers} />
       </svg>
     </S.MapContainer>
   );
@@ -94,20 +108,13 @@ VectorMap.propTypes = {
   handleMouseOver: PropTypes.func.isRequired,
   hovered: PropTypes.string.isRequired,
   parsedSVGData: PropTypes.shape({
-    /** Unique ID of each layer. */
     id: PropTypes.string.isRequired,
-    /** Name of the layer. */
     name: PropTypes.string.isRequired,
-    /** SVG path for the layer. */
     viewBox: PropTypes.string.isRequired,
-    /** Layers */
     layers: PropTypes.arrayOf(
       PropTypes.shape({
-        /** Unique ID of each layer. */
         id: PropTypes.string.isRequired,
-        /** Name of the layer. */
         name: PropTypes.string.isRequired,
-        /** SVG path for the layer. */
         d: PropTypes.string.isRequired,
       }),
     ).isRequired,

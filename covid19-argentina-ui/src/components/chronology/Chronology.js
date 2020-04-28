@@ -10,6 +10,10 @@ const Chronology = () => {
   const [isBarChart, toggleChart] = useState(true);
   const [isDaily, toggleIsDaily] = useState(true);
   const chronology = useSelector((state) => state.country.stats);
+
+  /**
+   * Parse the date property of each day for the charts
+   */
   const chronologyParsedDates = chronology.map((day) => {
     const date = new Date(day.date);
     return {
@@ -18,6 +22,9 @@ const Chronology = () => {
     };
   });
 
+  /**
+   * Obtain the accumulated deaths, cases and recovered stats
+   */
   const accumulatedData = chronologyParsedDates.reduce((acc, element, i) => {
     if (!i) {
       acc.push(element);

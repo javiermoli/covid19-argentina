@@ -13,7 +13,7 @@ const auth = (state = initialState, action) => {
       return { ...state, isActive: true, data: action.data };
     }
     case CLOSE: {
-      return initialState;
+      return { ...initialState };
     }
     case LOADING: {
       return { ...state, isLoading: action.isLoading };

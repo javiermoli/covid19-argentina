@@ -13,6 +13,10 @@ const MapExplorer = () => {
     setHovered(target.attributes.name.value);
   };
 
+  /**
+   * Move the hovered element to the final of the array in order to
+   * show the border correctly and add the current cases to each layer
+   */
   const parsedSVGData = {
     ...argMap,
     layers: argMap.layers.reduce((acc, layer) => {

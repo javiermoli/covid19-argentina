@@ -17,6 +17,9 @@ const Login = React.lazy(() => import('./components/login/Login'));
 
 function App() {
   const dispatch = useDispatch();
+  /**
+   * Check if the user is logged or not
+   */
   useEffect(() => {
     const storedData = JSON.parse(localStorage.getItem('userData'));
     if (storedData) {

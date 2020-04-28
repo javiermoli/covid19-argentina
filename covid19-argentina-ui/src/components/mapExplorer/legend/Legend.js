@@ -2,18 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import S from './styles';
 
-const DIFFERENCE_BETWEEN_LINES = 14;
+const SPACE_BETWEEN_LAYER = 14;
 
 const Legend = ({ layers }) => (
   <g transform="translate(200, 635)">
     <g transform="translate(0,24)">
       {layers.map((layer, i) => {
         const firstValue = layer.range[0];
+        const isLastLayer = i === 5;
         return (
-          <g key={layer.color} transform={`translate(0,${DIFFERENCE_BETWEEN_LINES * i})`}>
+          <g key={layer.color} transform={`translate(0,${SPACE_BETWEEN_LAYER * i})`}>
             <S.Rect layer={layer} width="36" height="10" />
             <S.Text transform="translate( 46, 10)">
-              {i < 5 ? `${firstValue} - ${layer.range[1]}` : `${firstValue} +`}
+              {!isLastLayer ? `${firstValue} - ${layer.range[1]}` : `${firstValue} +`}
             </S.Text>
           </g>
         );

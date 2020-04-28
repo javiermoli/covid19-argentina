@@ -60,6 +60,9 @@ const CountriesTable = () => {
     dispatch(fetchCountriesData());
   }, [dispatch]);
 
+  /**
+   * Add unique key for each element in order to avoid unexpected error from react
+   */
   const countriesData = useSelector((state) => state.countries).map((el) => ({
     ...el,
     key: el.country,

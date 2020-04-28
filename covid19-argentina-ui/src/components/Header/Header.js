@@ -2,14 +2,13 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Drawer } from 'antd';
 import S from './styles';
-import { blue } from '../../colors';
 
 const Nav = () => {
   const auth = useSelector((state) => state.auth.login);
   const [isVisible, setVisible] = useState(false);
   const [selected, setSelected] = useState('home');
   return (
-    <S.Header style={{ backgroundColor: blue }}>
+    <S.Header>
       <S.MenuOutlined onClick={() => setVisible(true)} />
       <Drawer
         title="Menu"
