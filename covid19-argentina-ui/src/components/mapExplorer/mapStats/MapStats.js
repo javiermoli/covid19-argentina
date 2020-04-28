@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Stats from '../../commonComponents/stats/Stats';
 import S from './styles';
 
@@ -31,4 +32,16 @@ const MapStats = ({ hovered, provincesData }) => {
     </div>
   );
 };
+
+MapStats.propTypes = {
+  hovered: PropTypes.string.isRequired,
+  provincesData: PropTypes.arrayOf(
+    PropTypes.shape({
+      cases: PropTypes.number.isRequired,
+      recov: PropTypes.number.isRequired,
+      deaths: PropTypes.number.isRequired,
+    }),
+  ).isRequired,
+};
+
 export default MapStats;

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Row, Col } from 'antd';
 import S from './styles';
 import {
@@ -24,6 +25,13 @@ const StatItem = ({ text, number, color, background }) => (
     </S.ColContainer>
   </Col>
 );
+
+StatItem.propTypes = {
+  background: PropTypes.string.isRequired,
+  color: PropTypes.string.isRequired,
+  text: PropTypes.string.isRequired,
+  number: PropTypes.number.isRequired,
+};
 
 const Stats = ({ confirmed, actives, recovered, deaths, showBackground }) => (
   <S.Row gutter={[24, 16]}>
@@ -53,5 +61,17 @@ const Stats = ({ confirmed, actives, recovered, deaths, showBackground }) => (
     />
   </S.Row>
 );
+
+Stats.propTypes = {
+  deaths: PropTypes.number.isRequired,
+  recovered: PropTypes.number.isRequired,
+  actives: PropTypes.number.isRequired,
+  confirmed: PropTypes.number.isRequired,
+  showBackground: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+};
+
+Stats.defaultProps = {
+  showBackground: '',
+};
 
 export default Stats;

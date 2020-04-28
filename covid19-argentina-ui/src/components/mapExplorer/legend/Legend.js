@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import S from './styles';
 
 const DIFFERENCE_BETWEEN_LINES = 14;
@@ -28,5 +29,14 @@ const Legend = ({ layers }) => (
     </S.Text>
   </g>
 );
+
+Legend.propTypes = {
+  layers: PropTypes.arrayOf(
+    PropTypes.shape({
+      range: PropTypes.array.isRequired,
+      color: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
+};
 
 export default Legend;

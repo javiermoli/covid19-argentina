@@ -1,5 +1,6 @@
 import React from 'react';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import PropTypes from 'prop-types';
 import S from './styles';
 
 const ChronologyDay = ({ date, deaths, recovered, cases, handleEdit, handleDelete }) => (
@@ -16,5 +17,14 @@ const ChronologyDay = ({ date, deaths, recovered, cases, handleEdit, handleDelet
     <p>Recovered: {recovered}</p>
   </S.Card>
 );
+
+ChronologyDay.propTypes = {
+  deaths: PropTypes.number.isRequired,
+  recovered: PropTypes.number.isRequired,
+  cases: PropTypes.number.isRequired,
+  date: PropTypes.string.isRequired,
+  handleEdit: PropTypes.func.isRequired,
+  handleDelete: PropTypes.func.isRequired,
+};
 
 export default ChronologyDay;

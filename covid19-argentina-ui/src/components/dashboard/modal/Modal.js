@@ -1,4 +1,5 @@
 import React from 'react';
+import { PropTypes } from 'prop-types';
 import { Modal as AntdModal, Form, Input } from 'antd';
 import { useDispatch } from 'react-redux';
 import { requestUpdateDay, requestCreateDay } from '../../../actions/chronologyActions';
@@ -58,6 +59,27 @@ const Modal = ({ modalData }) => {
       </Form>
     </AntdModal>
   );
+};
+
+Modal.propTypes = {
+  modalData: PropTypes.shape({
+    isLoading: PropTypes.bool.isRequired,
+    isActive: PropTypes.bool.isRequired,
+    data: PropTypes.shape({
+      deaths: PropTypes.number,
+      recovered: PropTypes.number,
+      cases: PropTypes.number,
+      date: PropTypes.string,
+      _id: PropTypes.string,
+      isNewDay: PropTypes.bool,
+    }),
+  }),
+};
+
+Modal.defaultProps = {
+  modalData: PropTypes.shape({
+    data: null,
+  }).isRequired,
 };
 
 export default Modal;

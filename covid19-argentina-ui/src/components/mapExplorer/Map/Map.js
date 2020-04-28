@@ -12,18 +12,8 @@ function inRange(n, nStart, nEnd) {
   return false;
 }
 
-const VectorMap = ({
-  legendVal,
-  id,
-  name,
-  layers,
-  tabIndex,
-  layerProps,
-  checkedLayers,
-  currentLayers,
-  hovered,
-  ...other
-}) => {
+const VectorMap = ({ hovered, parsedSVGData, handleMouseOver }) => {
+  const { layers } = parsedSVGData;
   if (!layers || !layers.length > 0) {
     console.error(
       "[react-vector-maps] No 'layers' prop provided. Did you spread a map object onto the component?",
@@ -36,7 +26,7 @@ const VectorMap = ({
   );
 
   const calculateLegendRange = (row) => {
-    const casesAverage = maxLayerValue.cases / 7;
+    const casesAverage = maxLayerValue.cases / 10;
     const secondValue = row !== 5 ? Math.round(casesAverage * (row + 1)) : Infinity;
     const firstValue = row ? (casesAverage * row + 1).toFixed() : 1;
     return [firstValue, secondValue.toFixed()];
@@ -64,18 +54,21 @@ const VectorMap = ({
       <svg
         preserveAspectRatio="xMidYMid meet"
         xmlns="http://www.w3.org/2000/svg"
-        key={id}
-        aria-label={name}
-        {...other}
+        key={parsedSVGData.id}
+        aria-label={parsedSVGData.name}
+        id={parsedSVGData.id}
+        name={parsedSVGData.name}
+        viewBox={parsedSVGData.viewBox}
       >
         {layers.map((layer) => (
           <path
             style={{ fill: confirmedCasesColorScale(layer.cases) }}
             key={layer.id}
-            tabIndex={tabIndex}
             stroke={hovered.includes(layer.name) ? red : lightPink}
-            {...layer}
-            {...layerProps}
+            id={layer.id}
+            name={layer.name}
+            d={layer.d}
+            onMouseOver={handleMouseOver}
           />
         ))}
         <g transform="translate(200, 635)">
@@ -83,7 +76,7 @@ const VectorMap = ({
             <circle
               stroke={hovered.includes('Ciudad Autónoma de Buenos Aires') ? red : 'transparent'}
               name="Ciudad Autónoma de Buenos Aires"
-              {...layerProps}
+              onMouseOver={handleMouseOver}
               fill="transparent"
               cx="60"
               cy="-390"
@@ -98,38 +91,27 @@ const VectorMap = ({
 };
 
 VectorMap.propTypes = {
-  /** Unique ID of the SVG element. */
-  id: PropTypes.string.isRequired,
-  /** Name of the map. */
-  name: PropTypes.string.isRequired,
-  /** View box for the map. */
-  viewBox: PropTypes.string.isRequired,
-  /** Layers that represent the regions of the map. */
-  layers: PropTypes.arrayOf(
-    PropTypes.shape({
-      /** Unique ID of each layer. */
-      id: PropTypes.string.isRequired,
-      /** Name of the layer. */
-      name: PropTypes.string,
-      /** SVG path for the layer. */
-      d: PropTypes.string.isRequired,
-    }),
-  ).isRequired,
-  /** Tab index for each layer. Set to '-1' to disable layer focusing. */
-  tabIndex: PropTypes.number,
-  /** Props to spread onto each layer. */
-  layerProps: PropTypes.object,
-  /** Layer IDs to 'select' with the 'aria-checked' attribute. */
-  checkedLayers: PropTypes.arrayOf(PropTypes.string),
-  /** Layer IDs to 'select' with the 'aria-current' attribute. */
-  currentLayers: PropTypes.arrayOf(PropTypes.string),
-};
-
-VectorMap.defaultProps = {
-  tabIndex: 0,
-  layerProps: null,
-  checkedLayers: null,
-  currentLayers: null,
+  handleMouseOver: PropTypes.func.isRequired,
+  hovered: PropTypes.string.isRequired,
+  parsedSVGData: PropTypes.shape({
+    /** Unique ID of each layer. */
+    id: PropTypes.string.isRequired,
+    /** Name of the layer. */
+    name: PropTypes.string.isRequired,
+    /** SVG path for the layer. */
+    viewBox: PropTypes.string.isRequired,
+    /** Layers */
+    layers: PropTypes.arrayOf(
+      PropTypes.shape({
+        /** Unique ID of each layer. */
+        id: PropTypes.string.isRequired,
+        /** Name of the layer. */
+        name: PropTypes.string.isRequired,
+        /** SVG path for the layer. */
+        d: PropTypes.string.isRequired,
+      }),
+    ).isRequired,
+  }).isRequired,
 };
 
 export default VectorMap;

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Stats from '../commonComponents/stats/Stats';
 
 const initialStatsData = {
@@ -23,6 +24,16 @@ const Summary = ({ countryData }) => {
       <Stats confirmed={cases} deaths={deaths} recovered={recovered} actives={actives} />
     </div>
   );
+};
+
+Summary.propTypes = {
+  countryData: PropTypes.arrayOf(
+    PropTypes.shape({
+      cases: PropTypes.number.isRequired,
+      recovered: PropTypes.number.isRequired,
+      deaths: PropTypes.number.isRequired,
+    }),
+  ).isRequired,
 };
 
 export default Summary;
