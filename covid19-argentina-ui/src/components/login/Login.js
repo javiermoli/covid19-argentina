@@ -14,18 +14,9 @@ const Login = () => {
     dispatch(requestLogin({ email, password }, history));
   };
 
-  const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo);
-  };
-
   return (
     <S.Container>
-      <S.Form
-        name="basic"
-        initialValues={{ remember: true }}
-        onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
-      >
+      <S.Form name="basic" initialValues={{ remember: true }} onFinish={onFinish}>
         <Form.Item
           label="Email"
           name="email"

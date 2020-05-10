@@ -5,9 +5,15 @@ import MapStats from './mapStats/MapStats';
 import argMap from './assets/map.json';
 import S from './styles';
 
+const defaultProvince = 'Provincia de Buenos Aires';
+
 const MapExplorer = () => {
+  /**
+   * @type {provincesData}
+   */
   const provincesData = useSelector((state) => state.country.provinces);
-  const [hovered, setHovered] = useState('Provincia de Buenos Aires');
+
+  const [hovered, setHovered] = useState(defaultProvince);
 
   const onMouseOver = ({ target }) => {
     setHovered(target.attributes.name.value);
@@ -16,6 +22,7 @@ const MapExplorer = () => {
   /**
    * Move the hovered element to the final of the array in order to
    * show the border correctly and add the current cases to each layer
+   * @type {mapData}
    */
   const parsedSVGData = {
     ...argMap,

@@ -24,6 +24,9 @@ S.Item = styled(Menu.Item)`
 S.Header = styled(Layout.Header)`
   background-color: ${blue};
   padding: 0 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 S.Menu = styled(Menu)`

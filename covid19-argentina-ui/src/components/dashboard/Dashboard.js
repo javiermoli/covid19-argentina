@@ -10,6 +10,9 @@ import S from './styles';
 import { openModal, toggleLoading } from '../../actions/modalActions';
 
 const Dashboard = () => {
+  /**
+   * @type {countryStats}
+   */
   const countryData = useSelector((state) => state.country.stats);
   const modalData = useSelector((state) => state.modal);
   const days = [...countryData].reverse();
@@ -19,6 +22,12 @@ const Dashboard = () => {
       dispatch(fetchData());
     }
   }, [dispatch, countryData.length]);
+
+  /**
+   * Open antd modal to confirm an action
+   *  @param {string} id the id of the selected day
+   *  @param {string} date the date of the selected day
+   */
   const confirmDeletion = (id, date) => {
     AntdModal.confirm({
       title: 'Confirm this action',
@@ -71,6 +80,7 @@ const Dashboard = () => {
               recovered={recovered}
               cases={cases}
               date={date}
+              id={_id}
             />
           );
         })}

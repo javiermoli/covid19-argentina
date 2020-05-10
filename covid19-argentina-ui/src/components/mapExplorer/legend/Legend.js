@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import S from './styles';
 
 const SPACE_BETWEEN_LAYER = 14;
 
+/**
+ * @param {object} props Component props
+ * @param {{color: string, range: number[]}[]} props.layers the layers of the map legend
+ */
 const Legend = ({ layers }) => (
   <g transform="translate(200, 635)">
     <g transform="translate(0,24)">
@@ -40,4 +44,15 @@ Legend.propTypes = {
   ).isRequired,
 };
 
-export default Legend;
+/**
+ * Avoid re-renders once the layers are filled
+ * @param {object} prevProps Component prev props
+ * @param {{color: string, range: number[]}[]} prevProps.layers the layers of the map legend
+ */
+const areEqual = (prevProps) => {
+  const { layers } = prevProps;
+  if (Number.isInteger(layers[0].range[1])) return true;
+  return false;
+};
+
+export default memo(Legend, areEqual);

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Switch } from 'antd';
-import { outerSpace } from '../../colors';
+import { outerSpace, blue } from '../../colors';
 
 const S = {};
 
@@ -22,6 +22,7 @@ S.Title = styled.h3`
 
 S.Switch = styled(Switch)`
   margin: 10px 0;
+  background-color: ${blue};
 `;
 
 S.ButtonsContainer = styled.div`

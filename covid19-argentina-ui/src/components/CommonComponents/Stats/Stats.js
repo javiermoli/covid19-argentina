@@ -13,6 +13,13 @@ import {
   transparentRed,
 } from '../../../colors';
 
+/**
+ * @param {object} props Component props
+ * @param {string} props.text the stat title
+ * @param {number} props.number quantity
+ * @param {string} props.color
+ * @param {string} props.background background color
+ */
 const StatItem = ({ text, number, color, background }) => (
   <Col>
     <S.ColContainer background={background}>
@@ -33,6 +40,14 @@ StatItem.propTypes = {
   number: PropTypes.number.isRequired,
 };
 
+/**
+ * @param {object} props Component props
+ * @param {number} props.confirmed confirmed quantity
+ * @param {number} props.actives actives quantity
+ * @param {number} props.recovered recovered quantity
+ * @param {number} props.deaths deaths quantity
+ * @param {string | boolean} props.showBackground
+ */
 const Stats = ({ confirmed, actives, recovered, deaths, showBackground }) => (
   <S.Row gutter={[24, 16]}>
     <StatItem

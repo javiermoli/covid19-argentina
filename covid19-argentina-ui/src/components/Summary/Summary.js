@@ -8,7 +8,15 @@ const initialStatsData = {
   recovered: 0,
 };
 
+/**
+ * @param {object} props Component props
+ * @param {countryStats} props.countryData
+ */
 const Summary = ({ countryData }) => {
+  /**
+   * Calculate the total cases, deaths and recovered
+   * @type {Stats}
+   */
   const stats = countryData.reduce(
     (acc, element) => ({
       deaths: acc.deaths + element.deaths,

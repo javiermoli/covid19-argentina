@@ -30,6 +30,7 @@ const provincesColumns = [
 const ProvincesTable = () => {
   /**
    * Add unique key for each element in order to avoid unexpected error from react
+   * @type {provincesData}
    */
   const provincesData = useSelector((state) => state.country.provinces)
     .map((el) => ({

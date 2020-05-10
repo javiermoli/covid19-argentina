@@ -4,15 +4,19 @@ import { BarChartOutlined, LineChartOutlined } from '@ant-design/icons';
 import { Row, Col } from 'antd';
 import SwitchedCharts from '../commonComponents/switchedCharts/SwitchedCharts';
 import S from './styles';
-import { maroon, green, blue, red } from '../../colors';
+import { maroon, green, red } from '../../colors';
 
 const Chronology = () => {
-  const [isBarChart, toggleChart] = useState(true);
-  const [isDaily, toggleIsDaily] = useState(true);
+  const [isBarChart, toggleChart] = useState(false);
+  const [isDaily, toggleIsDaily] = useState(false);
+  /**
+   * @type {countryStats}
+   */
   const chronology = useSelector((state) => state.country.stats);
 
   /**
    * Parse the date property of each day for the charts
+   * @type {countryStats}
    */
   const chronologyParsedDates = chronology.map((day) => {
     const date = new Date(day.date);
@@ -24,6 +28,7 @@ const Chronology = () => {
 
   /**
    * Obtain the accumulated deaths, cases and recovered stats
+   * @type {countryStats}
    */
   const accumulatedData = chronologyParsedDates.reduce((acc, element, i) => {
     if (!i) {
@@ -52,7 +57,6 @@ const Chronology = () => {
         </S.Button>
       </S.ButtonsContainer>
       <S.Switch
-        style={{ backgroundColor: blue }}
         checkedChildren={<LineChartOutlined />}
         unCheckedChildren={<BarChartOutlined />}
         checked={isBarChart}

@@ -1,68 +1,80 @@
 import axios from 'axios';
-import { addTokenToHeaders, getRemainingTimeForTokenExpiration } from '../utils/authUtils';
 
-// Types
+/**
+ * TYPES
+ */
 export const LOGIN = 'auth/login';
 export const LOADING = 'auth/loading';
 
-// Actions
+/**
+ * ACTIONS
+ */
+
+/**
+ * Login action
+ * @param {Boolean} isLogin flag to know if the user is logged or not
+ */
 export const login = (isLogin) => ({
   type: LOGIN,
   isLogin,
 });
 
-export const setLoading = (loading) => ({
+/**
+ * Check if the user is in login process
+ * @param {Boolean} isLoading flag to know it is loading or not
+ */
+export const setLoading = (isLoading) => ({
   type: LOADING,
-  loading,
+  isLoading,
 });
 
 /**
- * Login the user if token expiration time is valid.
- * Add setTimeout with the token expiration time stored in the local storage
+ * Logout the user
  */
-export const logoutAsync = () => (dispatch) => {
-  const remainingTime = getRemainingTimeForTokenExpiration();
-  if (remainingTime > 0) {
-    dispatch(login(true));
-  }
-  setTimeout(() => {
+export const logout = () =>
+  /**
+   * @param {Function} dispatch dispatch the redux actions
+   */
+  (dispatch) => {
     dispatch(login(false));
     localStorage.removeItem('userData');
-  }, remainingTime);
-};
+    axios.defaults.headers.common.Authorization = null;
+  };
 
 /**
- * API request, add the token and the remaining
- * for expiration time to the local storage
+ * Login the user
+ * @param {import('history').History} history react-router-dom history
+ * @param {{password: string, email: string}} payload user login information
  */
-export const requestLogin = (payload, history) => (dispatch) => {
-  const { email, password } = payload;
-  dispatch(setLoading(true));
-  axios
-    .post(`${process.env.REACT_APP_BACKEND_URL}users/login`, {
-      email,
-      password,
-    })
-    .then((res) => {
-      const { token } = res.data.user;
-      const oneHour = 1000 * 60 * 60;
-      const tokenExpirationDate = new Date(new Date().getTime() + oneHour);
-      localStorage.setItem(
-        'userData',
-        JSON.stringify({
-          token,
-          expiration: tokenExpirationDate.toISOString(),
-        }),
-      );
-      addTokenToHeaders(token);
-      dispatch(logoutAsync());
-    })
-    .then(() => {
-      dispatch(setLoading(false));
-      history.push('/dashboard');
-    })
-    .catch((errors) => {
-      dispatch(setLoading(false));
-      console.error(errors);
-    });
-};
+export const requestLogin = (payload, history) =>
+  /**
+   * @param {Function} dispatch dispatch the redux actions
+   */
+  (dispatch) => {
+    const { email, password } = payload;
+    dispatch(setLoading(true));
+    axios
+      .post(`${process.env.REACT_APP_BACKEND_URL}auth/login`, {
+        email,
+        password,
+      })
+      .then((res) => {
+        const { token, refreshToken } = res.data.user;
+        localStorage.setItem(
+          'userData',
+          JSON.stringify({
+            token,
+            refreshToken,
+          }),
+        );
+        dispatch(login(true));
+      })
+      .then(() => {
+        dispatch(setLoading(false));
+        history.push('/dashboard');
+      })
+      .catch((errors) => {
+        dispatch(setLoading(false));
+        console.error(errors);
+      });
+  };

@@ -1,9 +1,8 @@
 import { LOGIN, LOADING } from '../actions/authActions';
-import { getRemainingTimeForTokenExpiration } from '../utils/authUtils';
 
-// const storedData = JSON.parse(localStorage.getItem('userData'));
+const storedData = JSON.parse(localStorage.getItem('userData'));
 const initialState = {
-  login: getRemainingTimeForTokenExpiration() > 0,
+  login: !!storedData,
   isLoading: false,
 };
 
@@ -13,7 +12,7 @@ const auth = (state = initialState, action) => {
       return { ...state, login: action.isLogin };
     }
     case LOADING: {
-      return { ...state, isLoading: action.loading };
+      return { ...state, isLoading: action.isLoading };
     }
     default:
       return state;

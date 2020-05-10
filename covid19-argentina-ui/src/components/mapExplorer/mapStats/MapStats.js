@@ -3,13 +3,18 @@ import PropTypes from 'prop-types';
 import Stats from '../../commonComponents/stats/Stats';
 import S from './styles';
 
+/**
+ * @param {object} props Component props
+ * @param {provincesData} props.provincesData
+ * @param {string} props.hovered hovered zone
+ */
 const MapStats = ({ hovered, provincesData }) => {
-  const provinceData =
+  const hoveredProvince =
     provincesData.length && provincesData.find((prov) => prov.name.includes(hovered));
 
-  const activeCases = provinceData.cases - provinceData.recov - provinceData.deaths;
+  const activeCases = hoveredProvince.cases - hoveredProvince.recov - hoveredProvince.deaths;
 
-  const { deaths, recov, cases } = provinceData;
+  const { deaths, recov, cases } = hoveredProvince;
 
   return (
     <div>
@@ -17,7 +22,7 @@ const MapStats = ({ hovered, provincesData }) => {
         <S.HeaderTitle>Mapa de Argentina</S.HeaderTitle>
         <S.HeaderSubtitle>Desplazar sobre una zona para ver detalles</S.HeaderSubtitle>
       </S.HeaderContainer>
-      {provinceData && (
+      {hoveredProvince && (
         <div>
           <Stats
             showBackground
@@ -26,7 +31,7 @@ const MapStats = ({ hovered, provincesData }) => {
             recovered={recov}
             actives={activeCases}
           />
-          <S.StatsTitle>{provinceData.name}</S.StatsTitle>
+          <S.StatsTitle>{hoveredProvince.name}</S.StatsTitle>
         </div>
       )}
     </div>

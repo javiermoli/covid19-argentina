@@ -12,12 +12,16 @@ function inRange(n, nStart, nEnd) {
   return false;
 }
 
+/**
+ * @param {object} props Component props
+ * @param {string} props.hovered hovered zone
+ * @param {mapData} props.parsedSVGData svg properties
+ * @param {function} props.handleMouseOver
+ */
 const VectorMap = ({ hovered, parsedSVGData, handleMouseOver }) => {
   const { layers } = parsedSVGData;
-  if (!layers || !layers.length > 0) {
-    console.error(
-      "[react-vector-maps] No 'layers' prop provided. Did you spread a map object onto the component?",
-    );
+  if (!layers) {
+    console.error("No 'layers' prop provided.");
     return null;
   }
 
@@ -39,23 +43,20 @@ const VectorMap = ({ hovered, parsedSVGData, handleMouseOver }) => {
 
   /**
    * Calculate the layers of the legend with the color and the range
-   * @returns {Object[]}
+   * @returns {{color: string, range: number[]}[]} legend layers
    */
   const getLegendLayers = () =>
-    mapColorsScale.reduce((result, color, i) => {
-      const layer = {
-        color,
-        range: calculateLegendRange(i),
-      };
-      return result.concat(layer);
-    }, []);
+    mapColorsScale.map((color, i) => ({
+      color,
+      range: calculateLegendRange(i),
+    }));
 
   const legendLayers = getLegendLayers();
 
   /**
    * Calculate the color for the given cases
    * @param {Number} cases number of cases
-   * @returns {String}
+   * @returns {String} the corresponding color for the given cases
    */
   const confirmedCasesColorScale = (cases) =>
     legendLayers.reduce((acc, element) => {

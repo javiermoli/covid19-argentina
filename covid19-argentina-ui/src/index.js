@@ -2,9 +2,21 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
+import axios from 'axios';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import store from './store';
+import { interceptorRequest, interceptorResponseError } from './utils/axiosInterceptors';
+import './components/types';
+
+/**
+ * Axios interceptors
+ */
+axios.interceptors.request.use(interceptorRequest, (error) => Promise.reject(error));
+axios.interceptors.response.use(
+  (response) => response,
+  (error) => interceptorResponseError(error, store.dispatch),
+);
 
 const app = (
   <BrowserRouter>
