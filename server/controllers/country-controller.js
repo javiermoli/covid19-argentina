@@ -1,13 +1,14 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
-const pageNotFound = require('../utils/errorsHelper');
+const settings = require('../settings');
+const HttpError = require('../models/HttpError');
 
 const provincesDataSelector =
   'table.wikitable.sortable.col2der.col3der.col4der.col5der.col6der > tbody > tr';
 
-const getProvincesData = async (req, res) => {
+const getProvincesData = async (req, res, next) => {
   try {
-    const data = await axios.get(process.env.PROVINCES_URL);
+    const data = await axios.get(settings.PROVINCES_URL);
     const text = data.data['parse']['text']['*'];
     const $ = cheerio.load(text);
     const provinces = [];
@@ -23,8 +24,9 @@ const getProvincesData = async (req, res) => {
       }
     });
     res.status(200).json(provinces);
-  } catch (error) {
-    pageNotFound(res, error);
+  } catch (err) {
+    const error = new HttpError('Could not find the data.', 404);
+    return next(error);
   }
 };
 

@@ -1,11 +1,12 @@
 const ChronologyDay = require('../models/ChronologyDay');
+const HttpError = require('../models/HttpError');
 
 const getChronology = async (req, res, next) => {
   let chronology;
   try {
     chronology = await ChronologyDay.find();
-  } catch (error) {
-    res.status(400).json({ message: ' This day could not be found', error });
+  } catch (err) {
+    const error = new HttpError('Could not find the data.', 404);
     return next(error);
   }
 
@@ -17,8 +18,8 @@ const getChronologyDay = async (req, res, next) => {
   let chronology;
   try {
     chronology = await ChronologyDay.findById(_id);
-  } catch (error) {
-    res.status(400).json({ message: ' This day could not be found', error });
+  } catch (err) {
+    const error = new HttpError('Could not find the day.', 404);
     return next(error);
   }
 
@@ -36,12 +37,12 @@ const addChronologyDay = async (req, res, next) => {
 
   try {
     await createdChronology.save();
-  } catch (error) {
-    res.status(400).json({ message: ' This day could not be created', error });
+  } catch (err) {
+    const error = new HttpError('Could not add the day, please try again.', 404);
     return next(error);
   }
 
-  res.status(200).json({ createdChronology });
+  res.status(201).json({ createdChronology });
 };
 
 const updateChronologyDay = async (req, res, next) => {
@@ -49,8 +50,8 @@ const updateChronologyDay = async (req, res, next) => {
   let chronologyDay;
   try {
     chronologyDay = await ChronologyDay.findByIdAndUpdate(_id, req.body, { new: true });
-  } catch (error) {
-    res.status(400).json({ message: ' This day could not be found' });
+  } catch (err) {
+    const error = new HttpError('Could not update the day, please try again.', 404);
     return next(error);
   }
 
@@ -62,8 +63,8 @@ const deleteChronologyDay = async (req, res, next) => {
   let chronology;
   try {
     chronology = await ChronologyDay.findByIdAndDelete(_id);
-  } catch (error) {
-    res.status(400).json({ message: ' This day could not be created', error });
+  } catch (err) {
+    const error = new HttpError('Could not delete the day, please try again.', 404);
     return next(error);
   }
 
